@@ -15,12 +15,13 @@ aws keyspaces get-keyspace --keyspace-name ksp$USER
 ```
 aws keyspaces create-table --keyspace-name ksp$USER --table-name 'book_awards' --schema-definition 'allColumns=[{name=year,type=int},{name=award,type=text},{name=rank,type=int}, {name=category,type=text}, {name=author,type=text},{name=book_title,type=text},{name=publisher,type=text}], partitionKeys=[{name=year},{name=award}],clusteringKeys=[{name=category,orderBy=ASC},{name=rank,orderBy=ASC}]'
 
-aws keyspaces create-table
+aws keyspaces get-table --keyspace-name ksp$USER --table-name 'book_awards'
 ```
 
 
 ## Using the cqlsh-expansion to connect to Amazon Keyspaces
 ```
+source /pyenv/bin/activate
 pip install cqlsh-expansion
 cqlsh-expansion.init
 ```
