@@ -1,15 +1,19 @@
 # Trainer Tasks
 ## VM Configuration
-- RAM: 16 GB
-- CPU Cores: 8
-- Disk Size: 128 GB
+- RAM: 8 GB
+- CPU Cores: 4
+
+## Install packages
+```
+sudo apt update
+sudo apt install -y tree zip vim nano ranger net-tools iputils-ping
+sudo groupadd docker
+```
+
 
 ## Setup multiple users in Ubuntu
 - For each participant, we need to setup login accounts
 ```
-sudo groupadd docker
-
-
 for ((i=1;i<=9;i++)); do
 	export username="u0$i"
 	sudo useradd -g docker -m -p "p" $username;sudo usermod -aG sudo $username;echo $username:p | sudo /usr/sbin/chpasswd;sudo chown -R  $username:root /home/$username
@@ -51,10 +55,42 @@ EOF'
 sudo chmod +x /var/lib/cloud/scripts/per-boot/create_swapfile.sh
 ```
 
+
 ```
 sudo reboot
 ```
 
 ```
 free -m
+```
+
+## AWS CLI
+
+```
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+aws --version
+aws configure
+aws s3 ls
+```
+
+- Node: Region: us-east-1
+
+## Install Python
+```
+sudo apt install -y python3.10-venv python3-pip
+sudo chmod -R 777 /pyenv
+python3 -m venv /pyenv
+source /pyenv/bin/activate
+sudo mkdir -p /workdir
+sudo chmod -R 777 /workdir
+cd /workdir
+pip install jupyter
+nohup jupyter notebook --ip 0.0.0.0 --port 8888 &
+```
+
+## Set password
+```
+New Jupyter password: jupyter123
 ```
