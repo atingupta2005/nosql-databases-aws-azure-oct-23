@@ -33,3 +33,15 @@ DESCRIBE CLUSTER;
 - TRUNCATE − Removes all the data from a table.
 - CREATE INDEX − Defines a new index on a single column of a table.
 - DROP INDEX − Deletes a named index.
+
+## CQL Data Manipulation Commands
+- INSERT − Adds columns for a row in a table.
+- UPDATE − Updates a column of a row.
+- DELETE − Deletes data from a table.
+- BATCH − Executes multiple DML statements at once.
+
+## CQL Clauses
+- SELECT − This clause reads data from a table
+- WHERE − The where clause is used along with select to read a specific data.
+- ORDERBY − The orderby clause is used along with select to read a specific data in a specific order.
+
