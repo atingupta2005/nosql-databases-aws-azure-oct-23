@@ -1,3 +1,7 @@
+source /pyenv/bin/activate
+export AWS_DEFAULT_REGION=us-east-1
+cqlsh-expansion cassandra.us-east-1.amazonaws.com 9142 --ssl
+
 CREATE KEYSPACE IF NOT EXISTS my_keyspace WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1} ;
 USE my_keyspace;
 CREATE TABLE IF NOT EXISTS user ( first_name text, last_name text, title text, PRIMARY KEY (first_name));

@@ -1,3 +1,7 @@
+source /pyenv/bin/activate
+export AWS_DEFAULT_REGION=us-east-1
+cqlsh-expansion cassandra.us-east-1.amazonaws.com 9142 --ssl
+
 # Replace with the path to the actual file
 SOURCE '~/resources/hotel.cql';
 USE hotel;
