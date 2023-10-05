@@ -78,27 +78,25 @@ CREATE TABLE user ( first_name text, last_name text, PRIMARY KEY (first_name));
 # What additional information do you notice?
 DESCRIBE TABLE user;
 
-# Write some data
-INSERT INTO user (first_name, last_name) VALUES ('Bill', 'Nguyen');
+CONSISTENCY LOCAL_QUORUM
 
-# See how many rows have been written into this table
-# Warning - row scans are expensive operations on large tables
-SELECT COUNT (*) FROM user;
+# Write some data
+INSERT INTO user (first_name, last_name) VALUES ('Atin', 'Gupta');
 
 # Read the data we just wrote
-SELECT * FROM user WHERE first_name='Bill';
+SELECT * FROM user WHERE first_name='Atin';
 
 # Remove a non-primary key column
-DELETE last_name FROM USER WHERE first_name='Bill';
+DELETE last_name FROM USER WHERE first_name='Atin';
 
 # Check to see the value was removed
-SELECT * FROM user WHERE first_name='Bill';
+SELECT * FROM user WHERE first_name='Atin';
 
 # Delete an entire row
-DELETE FROM USER WHERE first_name='Bill';
+DELETE FROM USER WHERE first_name='Atin';
 
 # Check to make sure it was removed
-SELECT * FROM user WHERE first_name='Bill';
+SELECT * FROM user WHERE first_name='Atin';
 
 # Add a column to the table
 ALTER TABLE user ADD title text;
@@ -107,24 +105,8 @@ ALTER TABLE user ADD title text;
 DESCRIBE TABLE user;
 
 # Write a couple of rows, populate different columns for each, and view the results:
-INSERT INTO user (first_name, last_name, title) VALUES ('Bill', 'Nguyen', 'Mr.');
-INSERT INTO user (first_name, last_name) VALUES ('Mary', 'Rodriguez');
-SELECT * FROM user;
-
-# View the time to live value for a column
-SELECT first_name, last_name, TTL(last_name) FROM user WHERE first_name = 'Mary';
-
-# Set the TTL on the  last name column to one hour
-UPDATE user USING TTL 3600 SET last_name = 'McDonald' WHERE first_name = 'Mary' ;
-
-# View the resulting TTL
-# Note that it will already be counting down
-SELECT first_name, last_name, TTL(last_name) FROM user WHERE first_name = 'Mary';
-
-# Empty the contents of the table
-TRUNCATE user;
-
-# Show that the table is empty
+INSERT INTO user (first_name, last_name, title) VALUES ('Atin', 'Gupta', 'Mr.');
+INSERT INTO user (first_name, last_name) VALUES ('Parul', 'Rodriguez');
 SELECT * FROM user;
 
 # Remove the entire table

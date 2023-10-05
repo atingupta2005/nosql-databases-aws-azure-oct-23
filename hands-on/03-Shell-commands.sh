@@ -3,66 +3,26 @@ export AWS_DEFAULT_REGION=us-east-1
 cqlsh-expansion cassandra.us-east-1.amazonaws.com 9142 --ssl
 
 # Shell Commands
+CAPTURE '/tmp/u20-Outputfile'
 
 
-CAPTURE '/home/hadoop/CassandraProgs/Outputfile'
-
-
-
-select * from emp;
-
-
-
+USE kspu20;
+DESCRIBE tables;
+select * from user;
 capture off;
-
-
 
 CONSISTENCY
 
+describe user;
 
-
-COPY emp (emp_id, emp_city, emp_name, emp_phone,emp_sal) TO ‘myfile’;
-
-
-
-
-describe cluster;
-
-
-
+COPY user (first_name, last_name, title) TO 'user.txt';
 
 describe keyspaces;
 
-
-
 describe tables;
 
-
-
-describe table emp;
-
-
-
-
-DESCRIBE TYPES;
-
-
-
-
-expand on;
-select * from emp;
-expand off;
-
-
+describe table user;
 
 show host;
 
-
-
-source '/home/hadoop/CassandraProgs/inputfile';
-
-
-
 exit
-
-
