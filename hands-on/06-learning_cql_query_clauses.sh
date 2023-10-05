@@ -2,12 +2,14 @@ source /pyenv/bin/activate
 export AWS_DEFAULT_REGION=us-east-1
 cqlsh-expansion cassandra.us-east-1.amazonaws.com 9142 --ssl
 
+CONSISTENCY LOCAL_QUORUM;
+
 # Replace with the path to the actual file
-SOURCE '~/resources/hotel.cql';
+SOURCE '~/nosql-databases-aws-azure-oct-23/hands-on/hotel.cql';
 USE hotel;
 
 # Load test data for the table containing available room data
-COPY available_rooms_by_hotel_date FROM '~/resources/available_rooms.csv' WITH HEADER=true;
+COPY available_rooms_by_hotel_date FROM '~/nosql-databases-aws-azure-oct-23/hands-on/available_rooms.csv' WITH HEADER=true;
 
 #
 # WHERE clause examples
@@ -23,6 +25,7 @@ SELECT * FROM available_rooms_by_hotel_date WHERE hotel_id='AZ123' and room_numb
 DESCRIBE TABLE available_rooms_by_hotel_date;
 
 # We can force it to work, but why is this not a good practice?
+SELECT * FROM available_rooms_by_hotel_date WHERE hotel_id='AZ123' and room_number=101 ALLOW FILTERING;
 SELECT * FROM available_rooms_by_hotel_date WHERE date='2016-01-25' ALLOW FILTERING;
 
 #
@@ -42,6 +45,4 @@ SELECT * FROM available_rooms_by_hotel_date
   WHERE hotel_id='AZ123' AND date>'2016-01-05' AND date<'2016-01-12'
   ORDER BY date DESC;
 
-# Assuming you're running a multi-node cluster, try running some the queries above with tracing on
-# to see the interactions between nodes
-TRACING ON;
+exit

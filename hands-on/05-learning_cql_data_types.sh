@@ -6,6 +6,8 @@ CREATE KEYSPACE IF NOT EXISTS my_keyspace WITH replication = {'class': 'SimpleSt
 USE my_keyspace;
 CREATE TABLE IF NOT EXISTS user ( first_name text, last_name text, title text, PRIMARY KEY (first_name));
 
+CONSISTENCY LOCAL_QUORUM;
+
 # Write a couple of rows, but only if they don't exist already
 INSERT INTO user (first_name, last_name, title) VALUES ('Atin', 'Gupta', 'Mr.') IF NOT EXISTS;
 INSERT INTO user (first_name, last_name) VALUES ('Parul', 'Rodriguez') IF NOT EXISTS;
@@ -62,33 +64,4 @@ UPDATE user SET phone_numbers = phone_numbers - [ '480-111-1111' ] WHERE first_n
 # Delete a specific item directly using its index
 DELETE phone_numbers[0] from user WHERE first_name = 'Parul';
 
-
-#
-# Index examples
-#
-
-# Query based on a non-primary key column
-# Why doesn't this work?
-SELECT * FROM user WHERE last_name = 'Gupta';
-
-# Create a secondary index for the last_name column.
-CREATE INDEX ON user ( last_name );
-
-# Now try the query again
-SELECT * FROM user WHERE last_name = 'Gupta';
-
-# View the output of the describe command to see the full index definition
-# We didn't name the index, so Cassandra assigned a default name
-DESCRIBE KEYSPACE;
-
-# Create indexes on other attributes if desired, even collections
-# Note that queries based on indexes are typically more expensive, as they involve talking to more nodes
-CREATE INDEX ON user ( addresses );
-CREATE INDEX ON user ( emails );
-CREATE INDEX ON user ( phone_numbers );
-
-# Drop indexes we no longer want maintained
-DROP INDEX user_last_name_idx;
-DROP INDEX user_addresses_idx;
-DROP INDEX user_emails_idx;
-DROP INDEX user_phone_numbers_idx;
+exit
