@@ -36,7 +36,7 @@ aws dynamodb list-tables $LOCAL
 ## Creating a table
 ```
 aws dynamodb create-table \
-  --table-name UsersTable \
+  --table-name UsersTable_$USER \
   --attribute-definitions '[
     {
         "AttributeName": "Username",
@@ -62,14 +62,14 @@ aws dynamodb list-tables $LOCAL
 
 ```
 aws dynamodb describe-table \
-  --table-name UsersTable \
+  --table-name UsersTable_$USER \
   $LOCAL
 ```
 
 ## Put Item
 ```
 aws dynamodb put-item \
-    --table-name UsersTable \
+    --table-name UsersTable_$USER \
     --item '{
       "Username": {"S": "alexdebrie"}
     }' \
@@ -78,7 +78,7 @@ aws dynamodb put-item \
 
 ```
 aws dynamodb put-item \
-    --table-name UsersTable \
+    --table-name UsersTable_$USER \
     --item '{
       "Username": {"S": "daffyduck"},
       "Name": {"S": "Daffy Duck"},
@@ -90,7 +90,7 @@ aws dynamodb put-item \
 ## Get Item
 ```
 aws dynamodb get-item \
-    --table-name UsersTable \
+    --table-name UsersTable_$USER \
     --key '{
       "Username": {"S": "alexdebrie"}
     }' \
@@ -100,7 +100,7 @@ aws dynamodb get-item \
 ## Expressions
 ```
 aws dynamodb get-item \
-    --table-name UsersTable \
+    --table-name UsersTable_$USER \
     --key '{
       "Username": {"S": "daffyduck"}
     }' \
@@ -109,7 +109,7 @@ aws dynamodb get-item \
 
 ```
 aws dynamodb get-item \
-    --table-name UsersTable \
+    --table-name UsersTable_$USER \
     --projection-expression "Age, Username" \
     --key '{
       "Username": {"S": "daffyduck"}
@@ -120,7 +120,7 @@ aws dynamodb get-item \
 
 ```
 aws dynamodb get-item \
-    --table-name UsersTable \
+    --table-name UsersTable_$USER \
     --projection-expression "#a, #u" \
     --expression-attribute-names '{
       "#a": "Age",
@@ -135,7 +135,7 @@ aws dynamodb get-item \
 ## Updating Items
 ```
 aws dynamodb update-item \
-    --table-name UsersTable \
+    --table-name UsersTable_$USER \
     --key '{
       "Username": {"S": "daffyduck"}
     }' \
@@ -151,7 +151,7 @@ aws dynamodb update-item \
 
 ```
 aws dynamodb get-item \
-    --table-name UsersTable \
+    --table-name UsersTable_$USER \
     --key '{
       "Username": {"S": "daffyduck"}
     }' \
@@ -161,7 +161,7 @@ aws dynamodb get-item \
 
 ```
 aws dynamodb update-item \
-    --table-name UsersTable \
+    --table-name UsersTable_$USER \
     --key '{
       "Username": {"S": "daffyduck"}
     }' \
@@ -176,7 +176,7 @@ aws dynamodb update-item \
 
 ```
 aws dynamodb delete-item \
-    --table-name UsersTable \
+    --table-name UsersTable_$USER \
     --key '{
       "Username": {"S": "daffyduck"}
     }' \
@@ -187,7 +187,7 @@ aws dynamodb delete-item \
 ## Working with Multiple Items
 ```
 aws dynamodb create-table \
-    --table-name UserOrdersTable \
+    --table-name UserOrdersTable_$USER \
     --attribute-definitions '[
       {
           "AttributeName": "Username",
@@ -218,7 +218,7 @@ aws dynamodb create-table \
 ```
 aws dynamodb batch-write-item \
     --request-items '{
-        "UserOrdersTable": [
+        "UserOrdersTable_$USER": [
             {
                 "PutRequest": {
                     "Item": {
@@ -451,7 +451,7 @@ aws dynamodb batch-write-item \
 
 ```
 aws dynamodb query \
-    --table-name UserOrdersTable \
+    --table-name UserOrdersTable_$USER \
     --key-condition-expression "Username = :username" \
     --expression-attribute-values '{
         ":username": { "S": "daffyduck" }
@@ -463,7 +463,7 @@ aws dynamodb query \
 ## Querying
 ```
 aws dynamodb query \
-    --table-name UserOrdersTable \
+    --table-name UserOrdersTable_$USER \
     --key-condition-expression "Username = :username AND OrderId BETWEEN :startdate AND :enddate" \
     --expression-attribute-values '{
         ":username": { "S": "daffyduck" },
@@ -477,7 +477,7 @@ aws dynamodb query \
 
 ```
 aws dynamodb query \
-    --table-name UserOrdersTable \
+    --table-name UserOrdersTable_$USER \
     --key-condition-expression "Username = :username" \
     --expression-attribute-values '{
         ":username": { "S": "daffyduck" }
@@ -490,7 +490,7 @@ aws dynamodb query \
 
 ```
 aws dynamodb query \
-    --table-name UserOrdersTable \
+    --table-name UserOrdersTable_$USER \
     --key-condition-expression "Username = :username" \
     --expression-attribute-values '{
         ":username": { "S": "daffyduck" }
@@ -504,7 +504,7 @@ aws dynamodb query \
 ## Scans
 ```
 aws dynamodb scan \
-    --table-name UserOrdersTable \
+    --table-name UserOrdersTable_$USER \
     $LOCAL
 ```
 
@@ -512,7 +512,7 @@ aws dynamodb scan \
 
 ```
 aws dynamodb scan \
-    --table-name UserOrdersTable \
+    --table-name UserOrdersTable_$USER \
     --max-items 1 \
     $LOCAL
 ```
@@ -521,7 +521,7 @@ aws dynamodb scan \
 
 ```
 aws dynamodb scan \
-    --table-name UserOrdersTable \
+    --table-name UserOrdersTable_$USER \
     --total-segments 3 \
     --segment 0 \
     $LOCAL
@@ -529,7 +529,7 @@ aws dynamodb scan \
 
 ```
 aws dynamodb scan \
-    --table-name UserOrdersTable \
+    --table-name UserOrdersTable_$USER \
     --total-segments 3 \
     --segment 1 \
     $LOCAL
@@ -538,7 +538,7 @@ aws dynamodb scan \
 ## Filtering
 ```
 aws dynamodb query \
-    --table-name UserOrdersTable \
+    --table-name UserOrdersTable_$USER \
     --key-condition-expression "Username = :username" \
     --filter-expression "Amount > :amount" \
     --expression-attribute-values '{
@@ -550,14 +550,14 @@ aws dynamodb query \
 
 ```
 aws dynamodb delete-table \
-    --table-name UserOrdersTable \
+    --table-name UserOrdersTable_$USER \
     $LOCAL
 ```
 
 ### Creating a Local Secondary Index
 ```
 aws dynamodb create-table \
-    --table-name UserOrdersTable \
+    --table-name UserOrdersTable_$USER \
     --attribute-definitions '[
       {
           "AttributeName": "Username",
@@ -611,7 +611,7 @@ aws dynamodb create-table \
 ```
 aws dynamodb batch-write-item \
     --request-items '{
-        "UserOrdersTable": [
+        "UserOrdersTable_$USER": [
             {
                 "PutRequest": {
                     "Item": {
@@ -845,7 +845,7 @@ aws dynamodb batch-write-item \
 - Scan all the records
 ```
 aws dynamodb scan \
-    --table-name UserOrdersTable \
+    --table-name UserOrdersTable_$USER \
     --select COUNT \
     $LOCAL
 ```
@@ -855,7 +855,7 @@ aws dynamodb scan \
 
 ```
 aws dynamodb query \
-    --table-name UserOrdersTable \
+    --table-name UserOrdersTable_$USER \
     --index-name UserAmountIndex \
     --key-condition-expression "Username = :username AND Amount > :amount" \
     --expression-attribute-values '{
@@ -874,7 +874,7 @@ aws dynamodb query \
 ### Creating a Global Secondary Index
 ```
 aws dynamodb update-table \
-    --table-name UserOrdersTable \
+    --table-name UserOrdersTable_$USER \
     --attribute-definitions '[
       {
           "AttributeName": "ReturnDate",
@@ -915,7 +915,7 @@ aws dynamodb update-table \
 ### Querying a Global Secondary Index
 ```
 aws dynamodb scan \
-    --table-name UserOrdersTable \
+    --table-name UserOrdersTable_$USER \
     --index-name ReturnDateOrderIdIndex \
     $LOCAL
 ```
@@ -924,7 +924,7 @@ aws dynamodb scan \
 ```
 aws dynamodb batch-write-item \
     --request-items '{
-        "UserOrdersTable": [
+        "UserOrdersTable_$USER": [
             {
                 "PutRequest": {
                     "Item": {
@@ -974,7 +974,7 @@ aws dynamodb batch-write-item \
 ### Scan data again. We will receive our 4 Items back:
 ```
 aws dynamodb scan \
-    --table-name UserOrdersTable \
+    --table-name UserOrdersTable_$USER \
     --index-name ReturnDateOrderIdIndex \
     $LOCAL
 ```
