@@ -80,6 +80,7 @@ aws s3 ls
 ## Install Python
 ```
 sudo apt install -y python3.10-venv python3-pip
+sudo mkdir -p /pyenv
 sudo chmod -R 777 /pyenv
 python3 -m venv /pyenv
 source /pyenv/bin/activate
