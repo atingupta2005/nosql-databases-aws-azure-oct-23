@@ -25,6 +25,7 @@ cd ../..
 
 ```
 python amazon-documentdb-tools/index-tool/migrationtools/documentdb_index_tool.py --dump-indexes --uri 'mongodb://atingupta2005:Aws123456@ag-docdb-2023-10-31-06-30-19.cluster-cmihymqkhemz.us-east-1.docdb.amazonaws.com:27017/?tls=true&tlsCAFile=global-bundle.pem&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false' --dir .
+```
 
 ### Create a AWS DMS Replication Instance
 
