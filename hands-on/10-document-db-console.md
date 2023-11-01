@@ -247,6 +247,7 @@ wget http://media.mongodb.org/zips.json
 
 ```
 mongoimport --host ec2-34-230-63-221.compute-1.amazonaws.com:27017 --db zips-db --file zips.json
+```
 
 ```
 mongosh --host ec2-34-230-63-221.compute-1.amazonaws.com:27017
